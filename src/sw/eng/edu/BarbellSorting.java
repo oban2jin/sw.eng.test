@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BarbellSorting {
 	
@@ -64,29 +66,29 @@ public class BarbellSorting {
 		int stateNumber = 0;
 		State.put(NotSorted, stateNumber);
 		
-		ArrayList Q = new ArrayList();
+		Queue<ArrayList> Q = new LinkedList<ArrayList>();
 		Q.add(NotSorted);
 		
 		while(!Q.isEmpty()){
-			ArrayList<Integer> beofeState =  (ArrayList<Integer>) Q.get(0);
-			Q.remove(0);
+			
+			ArrayList<Integer> beforestate =  Q.poll();
 			
 			HashMap connected = new HashMap<Integer, Integer>();
 			Graph.add(connected);
 			
 			for(int i=0;i<N;i++){
 				for(int j=i+1;j<N;j++){
-					ArrayList<Integer> nextState = (ArrayList)beofeState.clone();
+					ArrayList<Integer> nextState = (ArrayList)beforestate.clone();
 					
-					nextState.set(i, beofeState.get(j));
-					nextState.set(j, beofeState.get(i));
+					nextState.set(i, beforestate.get(j));
+					nextState.set(j, beforestate.get(i));
 					
 					if(!State.containsKey(nextState)){
 						Q.add(nextState);
-						System.out.println("beofeState="+beofeState+"nextState="+nextState);
+						System.out.println("beofeState="+beforestate+"nextState="+nextState);
 						stateNumber++;
 						State.put(nextState, stateNumber);
-						connected.put(stateNumber, beofeState.get(i)+beofeState.get(j));
+						connected.put(stateNumber, beforestate.get(i)+beforestate.get(j));
 					}
 				}
 			}
@@ -109,7 +111,7 @@ public class BarbellSorting {
 		
 		HashMap<Integer, Integer> nextNodes = Graph.get(startNode);
 		
-		Iterator iter = nextNodes.keySet().iterator();
+		Iterator<Integer> iter = nextNodes.keySet().iterator();
 		
 		while(iter.hasNext()){
 			int nextNode  = (Integer) iter.next();
