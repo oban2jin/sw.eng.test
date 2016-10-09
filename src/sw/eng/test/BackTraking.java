@@ -38,22 +38,22 @@ public class BackTraking {
 			return;
 
 		if(((y+1)<col)&&(maze[x][y+1]==1)){
-		//¿À¸¥ÂÊ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			maze[x][y+1] = maze[x][y]+1;
 			searchPath(x,y+1);
 		}
 		if(((y-1)>=0)&&(maze[x][y-1]==1)){
-		//¿ÞÂÊ
+		//ï¿½ï¿½ï¿½ï¿½
 			maze[x][y-1] = maze[x][y]+1;
 			searchPath(x,y-1);			
 		}
 		if(((x-1)>=0)&&!((x-1)==0 && y==0)&&(maze[x-1][y]==1)){
-		//À§ÂÊ
+		//ï¿½ï¿½ï¿½ï¿½
 			maze[x-1][y] = maze[x][y]+1;
 			searchPath(x-1,y);			
 		}
 		if(((x+1)<row)&&(maze[x+1][y]==1)){
-		//¾Æ·¡ÂÊ 	
+		//ï¿½Æ·ï¿½ï¿½ï¿½ 	
 			maze[x+1][y] = maze[x][y]+1;
 			searchPath(x+1,y);			
 		}

@@ -15,7 +15,6 @@ public class DynamicPrograming {
 	
 	public void doSomething(){
 		long start = System.nanoTime();
-		//사용가능 동전 타입 설정
 		coins.add(1);
 		coins.add(5);
 		coins.add(10);
@@ -26,7 +25,7 @@ public class DynamicPrograming {
 		System.out.println("\nThe Answer="+findMinCoins(40));
 		long end = System.nanoTime();
 		
-		System.out.println("걸린시간:"+(end-start)+" ns");
+		System.out.println("Elapsed Time(ns):"+(end-start)+" ns");
 	}
 	
 	public int findMinCoins(int totalPayAmt){
@@ -42,7 +41,6 @@ public class DynamicPrograming {
 		}else{
 			temp=Integer.MAX_VALUE;
 			for(int coin : coins){
-				//최소 지불 갯수를 알고 있는지 확인
 				if(totalPayAmt-coin>=0){
 					if(mincoins.containsKey(totalPayAmt-coin)){
 						x1 = 1 + mincoins.get(totalPayAmt-coin);

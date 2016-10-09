@@ -28,8 +28,12 @@ public class Sudoku {
 		    {"","","","","","","","","",""}};
    
    public static void main(String[] args) {
+	   long start = System.nanoTime();
 		Sudoku sk = new Sudoku();
 		sk.doSomething();
+		long end = System.nanoTime();
+		
+		System.out.println("Elapsed Time="+(end-start));
 		
 		for(String[] x : sk.rslt){
 			for(String xx : x ){
@@ -42,7 +46,7 @@ public class Sudoku {
    public void doSomething(){
 	   Vector<Integer> temp = new Vector<Integer>();
 	   
-	   //Çà±âÁØÀ¸·Î ¿À·ù °Ë»ö
+	   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 	   for(int row=1 ; row<10;row++){
 		   temp.clear();
 		   for(int col=1;col<10;col++){
@@ -58,7 +62,7 @@ public class Sudoku {
 //		   System.out.println(temp);
 	   }
 	   
-	   //¿­±âÁØÀ¸·Î ¿À·ù °Ë»ö
+	   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 	   for(int col=1 ; col<10;col++){
 		   temp.clear();
 		   for(int row=1;row<10;row++){

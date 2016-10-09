@@ -3,10 +3,9 @@ package sw.eng.bank;
 import java.util.Stack;
 import java.util.Vector;
 
-public class FindCycle {
+public class FindCycleV2 {
 	private int[][] path;
 	private Stack<Vector> routes = new Stack<Vector>();
-//	private Vector<Integer> route;
 	
 	public static void main(String args[]){
 		long start = System.nanoTime();
@@ -17,7 +16,7 @@ public class FindCycle {
 		System.out.println("Elapsed Time(ns) = "+(end-start));
 	}
 
-	public FindCycle(){
+	public FindCycleV2(){
 		this.path = new int[][]{{0,0,0,0,0,0,0,0,0},
 			                    {0,0,0,1,0,0,0,0,0},
 			                    {0,0,0,0,0,0,0,0,0},
@@ -52,7 +51,7 @@ public class FindCycle {
 				Vector<Integer> newroute = (Vector<Integer>)curroute.clone();
 				
 				if(newroute.firstElement() == nextNodes.get(i)){
-					//����Ŭ ���� �˻�
+					//사이클 패스 발견 
 					System.out.println("Find the Cycle Path="+newroute);
 				}else if(!newroute.contains(nextNodes.get(i))){
 					newroute.add(nextNodes.get(i));
@@ -70,12 +69,9 @@ public class FindCycle {
 		for(int i=1;i<nodePath.length;i++){
 			if(nodePath[i]==1){
 				nextNodes.add(i);
-//				System.out.println("next=["+i+"]");
 			}
 		}
-		
 		return nextNodes;
-		
 	}
 
 }
