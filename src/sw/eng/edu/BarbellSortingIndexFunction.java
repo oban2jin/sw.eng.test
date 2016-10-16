@@ -27,7 +27,7 @@ public class BarbellSortingIndexFunction {
 	public static HashMap<Integer, ArrayList<Long>> WeightOrder;
 	//최소값 상태가 여러개 있을수 있음을 고려.
 	public static HashMap<ArrayList<Integer>,Integer> MinState = new HashMap<ArrayList<Integer>,Integer>();
-	public static int MinWeight;
+	public static int MinWeight = Integer.MAX_VALUE;
 	public static HashMap<BigInteger, Integer> MinW = new HashMap<BigInteger, Integer>();
 	public static HashMap<BigInteger,Integer> cache;
 	public static BigInteger NotSortedNo;
@@ -56,7 +56,11 @@ public class BarbellSortingIndexFunction {
 			Sorted = (ArrayList)NotSorted.clone();
 			Collections.sort(Sorted);
 			doPreCondition();
-
+			System.out.println("End of doPreCondition.");
+			
+//			MinW.put(getIndex(Sorted), 0);
+//			System.out.println(createCrticalMinWeightRecursive(0,0,Sorted));
+			
 			NotSortedNo = getIndex(NotSorted);
 			System.out.println("End of doPreCondition=>"+NotSortedNo);
 			MinW.put(getIndex(Sorted), 0);
@@ -96,20 +100,20 @@ public class BarbellSortingIndexFunction {
 			}
 		}
 
-		//		for(int i=0;i<NotSorted.size();i++){
-		//			for(int j=i+1;j<NotSorted.size();j++){
-		//
-		//				int w = NotSorted.get(i) + NotSorted.get(j);	
-		//				if(!WeightOrder.containsKey(w)){
-		////					ArrayList<Long> wsum = new ArrayList<Long>();
-		////					WeightOrder.put(w, wsum);
-		//				}
-		//				ArrayList<Long> wsum = WeightOrder.get(w);
-		//				//wsum.add(Math.min(NotSorted.get(i),NotSorted.get(j))*First+Math.max(NotSorted.get(i), NotSorted.get(j)));
-		//			}
-		//		}
-		//
-		//		System.out.println("WeightOrder="+WeightOrder);
+//				for(int i=0;i<NotSorted.size();i++){
+//					for(int j=i+1;j<NotSorted.size();j++){
+//		
+//						int w = NotSorted.get(i) + NotSorted.get(j);	
+//						if(!WeightOrder.containsKey(w)){
+//							ArrayList<Long> wsum = new ArrayList<Long>();
+//							WeightOrder.put(w, wsum);
+//						}
+//						ArrayList<Long> wsum = WeightOrder.get(w);
+//						wsum.add(Math.min(NotSorted.get(i),NotSorted.get(j))*First+Math.max(NotSorted.get(i), NotSorted.get(j)));
+//					}
+//				}
+		
+				System.out.println("WeightOrder="+WeightOrder);
 
 	}
 
@@ -131,8 +135,8 @@ public class BarbellSortingIndexFunction {
 	}
 
 	public static int getCrticalMinWeightRecursive(int weightsum,ArrayList<Integer> miniPath){
-		System.out.println("***********************************************");
-		System.out.println("weightsum="+weightsum+"/miniPath"+miniPath+"/"+N+","+(N/2)+","+(N%2));
+//		System.out.println("***********************************************");
+//		System.out.println("weightsum="+weightsum+"/miniPath"+miniPath+"/"+N+","+(N/2)+","+(N%2));
 
 		int minW = Integer.MAX_VALUE;
 		BigInteger stateNo = getIndex(miniPath);
@@ -140,48 +144,48 @@ public class BarbellSortingIndexFunction {
 		if(NotSortedNo.equals(stateNo)){
 			//기저 조건을 (2/N + 2%N)+1
 			//MinPath에 저장하고,
-			System.out.println("base case=>"+miniPath+"/"+weightsum);
+			System.out.println(MinWeight+","+weightsum+"/base case=>"+miniPath);
+			MinWeight = Math.min(MinWeight, weightsum);
 			return weightsum;
 		}
 
 		if(cache.containsKey(stateNo)){
-			System.out.println("Hit cache=>"+stateNo);
-			return cache.get(stateNo)+weightsum;
+//			System.out.println("Hit cache=>"+stateNo);
+			if(cache.get(stateNo)==Integer.MAX_VALUE){
+				return Integer.MAX_VALUE;
+			}else{
+				return cache.get(stateNo)+weightsum;
+			}
 		}
 
 		for(int i=0;i<NotSorted.size();i++){
-			for(int j=0;j<NotSorted.size();j++){
+			if(NotSorted.get(i)!=miniPath.get(i)){
+				int firstContents = miniPath.get(i);
+				int firstIdx = i;
+				int secondIdx = miniPath.indexOf(NotSorted.get(i));
+				int secondContents = miniPath.get(secondIdx);
+
+				miniPath.set(firstIdx, secondContents);
+				miniPath.set(secondIdx, firstContents);
 				
-				if(NotSorted.get(i)!=miniPath.get(j)){
-					int firstContents = NotSorted.get(i);
-					int firstIdx = j;
-					int xx = miniPath.get(j);
-					int secondIdx = miniPath.indexOf(firstContents);
-					int secondContents = miniPath.get(secondIdx);
-					
-					System.out.println("firstIdx="+firstIdx+"/firstContents="+firstContents);
-					System.out.println("secondIdx="+secondIdx+"/secondContents="+secondContents);
-					
-					miniPath.set(firstIdx, secondContents);
-					miniPath.set(secondIdx, xx);
-					
-					int w= xx + secondContents;
-					
-					if(!MinW.containsKey(getIndex(miniPath))){
-						if(minW>w){
-							MinW.put(getIndex(miniPath), w);
-							minW = Math.min(minW, getCrticalMinWeightRecursive(weightsum+w,miniPath));
-							MinW.remove(getIndex(miniPath));
-						}
+				int w = firstContents + secondContents;
+				
+				if(!MinW.containsKey(getIndex(miniPath))){
+					if(MinWeight>(w+weightsum)){
+						MinW.put(getIndex(miniPath), w);
+						minW = Math.min(minW, getCrticalMinWeightRecursive(weightsum+w,miniPath));
+						MinW.remove(getIndex(miniPath));
+					}else{
+//						System.out.println("No Need to call=>"+MinWeight+","+(w+weightsum));
 					}
-					
-					miniPath.set(firstIdx, xx);
-					miniPath.set(secondIdx, secondContents);
-							
 				}
+
+				miniPath.set(firstIdx, firstContents);
+				miniPath.set(secondIdx, secondContents);
+
 			}
 		}
-		
+
 		cache.put(stateNo,minW);
 		return minW;
 	}
