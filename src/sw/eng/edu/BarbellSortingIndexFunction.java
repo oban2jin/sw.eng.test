@@ -64,7 +64,7 @@ public class BarbellSortingIndexFunction {
 			NotSortedNo = getIndex(NotSorted);
 			System.out.println("End of doPreCondition=>"+NotSortedNo);
 			MinW.put(getIndex(Sorted), 0);
-			System.out.println("MinPath="+getCrticalMinWeightRecursive(0,Sorted));
+			System.out.println("MinPath="+getCrticalMinWeightRecursive(0,Sorted,0));
 
 
 			//			createGraph();
@@ -134,7 +134,7 @@ public class BarbellSortingIndexFunction {
 		return indexvalue;
 	}
 
-	public static int getCrticalMinWeightRecursive(int weightsum,ArrayList<Integer> miniPath){
+	public static int getCrticalMinWeightRecursive(int weightsum,ArrayList<Integer> miniPath,int depth){
 //		System.out.println("***********************************************");
 //		System.out.println("weightsum="+weightsum+"/miniPath"+miniPath+"/"+N+","+(N/2)+","+(N%2));
 
@@ -144,7 +144,7 @@ public class BarbellSortingIndexFunction {
 		if(NotSortedNo.equals(stateNo)){
 			//기저 조건을 (2/N + 2%N)+1
 			//MinPath에 저장하고,
-			System.out.println(MinWeight+","+weightsum+"/base case=>"+miniPath);
+			System.out.println(depth+"/"+MinWeight+","+weightsum+"/base case=>"+miniPath);
 			MinWeight = Math.min(MinWeight, weightsum);
 			return weightsum;
 		}
@@ -173,7 +173,7 @@ public class BarbellSortingIndexFunction {
 				if(!MinW.containsKey(getIndex(miniPath))){
 					if(MinWeight>(w+weightsum)){
 						MinW.put(getIndex(miniPath), w);
-						minW = Math.min(minW, getCrticalMinWeightRecursive(weightsum+w,miniPath));
+						minW = Math.min(minW, getCrticalMinWeightRecursive(weightsum+w,miniPath,depth+1));
 						MinW.remove(getIndex(miniPath));
 					}else{
 //						System.out.println("No Need to call=>"+MinWeight+","+(w+weightsum));

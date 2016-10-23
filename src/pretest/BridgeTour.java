@@ -16,7 +16,7 @@ public class BridgeTour {
 	public static int[] BridgeDistance;
 	public static HashMap<Integer, Integer>[] BridgeGraph;
 	public static int[] cache;
-	public static boolean[] visited;
+//	public static boolean[] visited; 
 	public static int[] deleteCrossing;
 	public static int MinPlusDistance = Integer.MAX_VALUE;
 
@@ -36,12 +36,12 @@ public class BridgeTour {
 			BridgeDistance = new int[2*N+2];
 			BridgeGraph = new HashMap[2*N+2];
 			cache = new int[2*N+2];
-			visited = new boolean[2*N+2];
+//			visited = new boolean[2*N+2];
 			MinPlusDistance = Integer.MAX_VALUE;
 
 			for(int i=0;i<cache.length;i++){
 				cache[i]=-1;
-				visited[i]=false;
+//				visited[i]=false;
 			}
 
 			String[] BrigePosN = br.readLine().split(" ");
@@ -56,7 +56,7 @@ public class BridgeTour {
 
 			createBridgeGraph();
 
-			visited[StartPoint] = true;
+//			visited[StartPoint] = true;
 			getMinTravelDistance(StartPoint);
 
 			printCache();
@@ -66,8 +66,6 @@ public class BridgeTour {
 			minPath = getMinTravelPath(minPath);
 
 			System.out.println("#"+(t+1)+" "+solveProblem(minPath));
-
-
 		}
 
 	}//End-of-Main M
@@ -110,48 +108,12 @@ public class BridgeTour {
 			System.out.println("K="+K+"/bridgeCrossCnt="+bridgeCrossCnt+"/Gap="+gap);
 
 			ArrayList<Integer> deletecrossing = new ArrayList<Integer>();
-//			Arrays.sort(deleteCrossing);
 
-			return cache[StartPoint]+getMinimumRemoveCrossingBridgeBackUp(gap,0,deletecrossing);
+			return cache[StartPoint]+getMinimumRemoveCrossingBridge(gap,0,deletecrossing);
 		}
 	}
 
 	public static int getMinimumRemoveCrossingBridge(int removecnt,int plusdistance,ArrayList<Integer> deletecrossing){
-		System.out.println("*********************getMinimumRemoveCrossingBridge()***************************************");
-		System.out.println("removecnt="+removecnt+"/"+"plusdistance="+plusdistance+"/deletecrossing="+deletecrossing);
-
-		int minpulsdistance = 0;
-		int[] clone = deleteCrossing.clone();
-		Arrays.sort(clone);
-		
-		for(int i=0;i<clone.length;i++){
-			System.out.println("i="+i+"/clone[i]="+clone[i]);
-		}
-		
-		for(int i=0;i<clone.length;i++){
-			//minpulsdistance = minpulsdistance + deleteCrossing[i];
-			int index = clone[i] % 1000;
-			int distance = clone[i] / 1000;
-			
-			System.out.println("clone["+i+"]="+clone[i]);
-			System.out.println("index="+index+"|contains(index)="+deletecrossing.contains(index)+"/contains(index-1)="+deletecrossing.contains(index-1)+"/contains(index+1)="+deletecrossing.contains(index+1));
-			if((!deletecrossing.contains(index))&&(!deletecrossing.contains(index-1))&&(!deletecrossing.contains(index+1))){
-				deletecrossing.add(index);
-			}
-			System.out.println("deletecrossing="+deletecrossing);
-		}
-
-		for(int i=0;i<removecnt;i++){
-			minpulsdistance = minpulsdistance + deleteCrossing[deletecrossing.get(i)]/1000;
-			System.out.println("deleteCrossing[deletecrossing.get(i)]:"+deleteCrossing[deletecrossing.get(i)]);
-		}
-
-		System.out.println("deletecrossing="+deletecrossing+"/minpulsdistance="+minpulsdistance);
-
-		return minpulsdistance;
-	}
-
-	public static int getMinimumRemoveCrossingBridgeBackUp(int removecnt,int plusdistance,ArrayList<Integer> deletecrossing){
 //		System.out.println("*********************getMinimumRemoveCrossingBridge()***************************************");
 //		System.out.println("removecnt="+removecnt+"/"+"plusdistance="+plusdistance+"/deletecrossing="+deletecrossing);
 
@@ -186,7 +148,7 @@ public class BridgeTour {
 //			System.out.println("index="+index+"|contains(index)="+deletecrossing.contains(index)+"/contains(index-1)="+deletecrossing.contains(index-1)+"/contains(index+1)="+deletecrossing.contains(index+1));
 			if((!deletecrossing.contains(index))&&(!deletecrossing.contains(index-1))&&(!deletecrossing.contains(index+1))&&(lastBridge<=index)){
 				deletecrossing.add(index);
-				minpulsdistance= Math.min(minpulsdistance,getMinimumRemoveCrossingBridgeBackUp(removecnt-1,plusdistance+distance,deletecrossing));
+				minpulsdistance= Math.min(minpulsdistance,getMinimumRemoveCrossingBridge(removecnt-1,plusdistance+distance,deletecrossing));
 				deletecrossing.remove(deletecrossing.size()-1);
 			}
 		}			
@@ -197,8 +159,8 @@ public class BridgeTour {
 	}
 
 	public static ArrayList getMinTravelPath(ArrayList minPath){
-		/*System.out.println("************getMinTravelPath(ArrayList<Integer> minPath)*****************");
-		System.out.println("minPath=>"+minPath);*/
+		System.out.println("************getMinTravelPath(ArrayList<Integer> minPath)*****************");
+		System.out.println("minPath=>"+minPath);
 
 		int lastBridge = (Integer) minPath.get(minPath.size()-1);
 
@@ -210,6 +172,7 @@ public class BridgeTour {
 		Iterator iter = nextBridges.keySet().iterator();
 
 		int nextBridge = Integer.MAX_VALUE;
+		int minNextBridge = Integer.MAX_VALUE;
 
 		while(iter.hasNext()){
 			nextBridge  = (Integer)iter.next();
@@ -220,12 +183,16 @@ public class BridgeTour {
 			System.out.println("cache[nextBridge]:"+cache[nextBridge]);*/
 
 			if((cache[lastBridge]==cache[nextBridge]+nextBridges.get(nextBridge))){
-				if(Math.abs(lastBridge-nextBridge)!=1){
-					minPath.add("*");
-				}
-				minPath.add(nextBridge);
+				//최소경로가 여러개인경우 , 다리 건너는 횟수가 가장 적은 경우를 선택하는게 유리
+				minNextBridge = Math.min(minNextBridge, nextBridge);
 			}
 		}
+		
+		if(Math.abs(lastBridge-minNextBridge)!=1){
+			minPath.add("*");
+		}
+		
+		minPath.add(minNextBridge);
 
 		return getMinTravelPath(minPath);
 
@@ -234,7 +201,7 @@ public class BridgeTour {
 	public static int getMinTravelDistance(int startPos){
 		System.out.println("************getMinTravelDistance()********************");
 		System.out.println("startPos=>"+ startPos);
-		printVisted();
+//		printVisted();
 
 		int  mindistance = Integer.MAX_VALUE;
 
@@ -256,15 +223,10 @@ public class BridgeTour {
 		Iterator iter = nextBridges.keySet().iterator();
 		while(iter.hasNext()){
 			int nextBridge = (Integer)iter.next();
-
-			if(visited[nextBridge] == false){
-				visited[nextBridge] = true;
-				mindistance = Math.min(mindistance, nextBridges.get(nextBridge) + getMinTravelDistance(nextBridge));
-				visited[nextBridge] = false;
-			}
+			mindistance = Math.min(mindistance, nextBridges.get(nextBridge) + getMinTravelDistance(nextBridge));
 		}
 
-		/*		if(startPos>N){
+		/*if(startPos>N){
 			System.out.println("startPos[S"+(startPos-N)+"]/mindistance["+mindistance+"]");						
 		}else{
 			System.out.println("startPos[N"+startPos+"]/mindistance["+mindistance+"]");
@@ -345,27 +307,27 @@ public class BridgeTour {
 
 	}
 
-	public static void printVisted(){
-		System.out.println("-----------printVisted()---------------------");
-
-		for(int i=0;i<visited.length;i++){
-			if(visited[i]){
-				if(i>N){
-					if(i==EndPoint){
-						System.out.println("visited[E]/"+visited[i]);
-					}else{
-						System.out.println("visited[S"+(i-N)+"]/"+visited[i]);						
-					}
-				}else{
-					if(i==StartPoint){
-						System.out.println("visited[S]/"+visited[i]);
-					}else{
-						System.out.println("visited[N"+(i)+"]/"+visited[i]);
-					}
-				}
-			}
-		}
-	}
+//	public static void printVisted(){
+//		System.out.println("-----------printVisted()---------------------");
+//
+//		for(int i=0;i<visited.length;i++){
+//			if(visited[i]){
+//				if(i>N){
+//					if(i==EndPoint){
+//						System.out.println("visited[E]/"+visited[i]);
+//					}else{
+//						System.out.println("visited[S"+(i-N)+"]/"+visited[i]);						
+//					}
+//				}else{
+//					if(i==StartPoint){
+//						System.out.println("visited[S]/"+visited[i]);
+//					}else{
+//						System.out.println("visited[N"+(i)+"]/"+visited[i]);
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	public static void printCache(){
 		System.out.println("-----------printCache()---------------------");
