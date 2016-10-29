@@ -40,15 +40,15 @@ public class BarbellSortingCuttingBranch {
 			Sorted = (ArrayList<Integer>)NotSorted.clone();
 			Collections.sort(Sorted);
 			
-			cache.put(getStateNo(Sorted), 0);
-			createMinWeight((N-getSamePositionCount(NotSorted)+1)/2,Sorted,0);
-			
-			printCache();
+//			cache.put(getStateNo(Sorted), 0);
+//			createMinWeight((N-getSamePositionCount(NotSorted)+1)/2,Sorted,0);
+//			
+//			printCache();
 			
 			System.out.println("NotSorted=>"+NotSorted+"/"+getStateNo(NotSorted));
 			System.out.println("Sorted=>"+Sorted+"/"+getStateNo(Sorted));
 			
-//			System.out.println("#"+(t+1)+" "+ getMinWeightSum(NotSorted,0));
+			System.out.println("#"+(t+1)+" "+ getMinWeightSum(NotSorted,0));
 			
 		}
 		
