@@ -12,6 +12,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeMap;
 
+
+
+/**
+ * @author oban2jin
+ * 10,000개 노드를 대상으로 Recursive Call을 이용한 Graph 탐색은 절대 1초대 수행시간에 답이 나오지 않는다.
+ * 결국 탐욕적 알고리즘으로 문제를 해결해야 함.
+ * 1)TreeMap / HashSet 사용법 숙지 
+ */
 public class BarbellSortingGreedy {
 	
 	public static int T,N;
