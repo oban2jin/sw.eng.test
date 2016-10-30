@@ -1,3 +1,5 @@
+package algospot.sushi;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -5,7 +7,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class Main {
+public class Sushi {
 	public static int C,N,M;
 	public static int[] Price;
 	public static int[] Value;
@@ -15,7 +17,7 @@ public class Main {
 	
 	
 	public static void main(String[] args) throws Exception {
-//		System.setIn(new FileInputStream("/Users/oban2jin/Documents/workspace/sw.eng.test/src/algospot/sushi/Sushi.txt"));
+		System.setIn(new FileInputStream("/Users/oban2jin/Documents/workspace/sw.eng.test/src/algospot/sushi/Sushi.txt"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		C = Integer.parseInt(br.readLine());
@@ -34,7 +36,7 @@ public class Main {
 				Value[n] = Integer.parseInt(inP2[1]);
 			}
 			
-//			printInput();
+			printInput();
 			
 			int[] Temp = Arrays.copyOf(Price, Price.length);
 			Arrays.sort(Temp);
@@ -48,7 +50,7 @@ public class Main {
 				System.out.println(cache.get(M));
 			}
 
-//			printCache();
+			printCache();
 		}
 		
 	}//End-of-Main
