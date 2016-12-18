@@ -36,11 +36,12 @@ public class Sushi {
 				Value[n] = Integer.parseInt(inP2[1]);
 			}
 			
-			printInput();
+//			printInput();
 			
 			int[] Temp = Arrays.copyOf(Price, Price.length);
 			Arrays.sort(Temp);
 			MaxPrice = Temp[Temp.length-1];
+			
 			getMaxValues(MaxPrice);
 			
 			if(M>MaxPrice){
@@ -70,6 +71,7 @@ public class Sushi {
 				maxvalues = Math.max(maxvalues, getMaxValues(budgets-Price[n])+Value[n]);		
 			}
 		}
+		
 		cache.put(budgets, maxvalues);
 		return maxvalues;
 	}

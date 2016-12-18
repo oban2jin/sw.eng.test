@@ -64,13 +64,13 @@ public class BarbellSortingGreedy {
 			
 //			printCache();
 			
-			System.out.println("NotSorted=>"+printArray(NotSorted));
-			System.out.println("Sorted   =>"+printArray(Sorted));
-//			System.out.println("NotSortedIndex"+NotSortedIndex);
-//			System.out.println("MinSwap"+MinSwap);
+			//System.out.println("NotSorted=>"+printArray(NotSorted));
+			//System.out.println("Sorted   =>"+printArray(Sorted));
+//			//System.out.println("NotSortedIndex"+NotSortedIndex);
+//			//System.out.println("MinSwap"+MinSwap);
 			
 			System.out.println("#"+(t+1)+" "+ getMinWeightSum(0));
-			System.out.println("NotSorted=>"+printArray(NotSorted));
+			//System.out.println("NotSorted=>"+printArray(NotSorted));
 			
 			long endTime = System.currentTimeMillis();
 			System.out.println("Time="+(endTime-startTime)/1000.0);
@@ -79,8 +79,8 @@ public class BarbellSortingGreedy {
 	}// End-of-Main M
 	
 //	public static void createMinWeight(int depth,ArrayList<Integer> list,int weightSum){
-//		System.out.println("***********************createMinWeight()*************************************");
-//		System.out.println("depth="+depth+"/list="+list+"weightSum="+weightSum);
+//		//System.out.println("***********************createMinWeight()*************************************");
+//		//System.out.println("depth="+depth+"/list="+list+"weightSum="+weightSum);
 //		
 //		int minWeitht = Integer.MAX_VALUE;
 //		ArrayList<Integer> minlist = new ArrayList<Integer>();
@@ -88,7 +88,7 @@ public class BarbellSortingGreedy {
 //		if(depth==0){
 ////			BigInteger stateNo = getStateNo(list);
 ////			cache.put(stateNo, weightSum);
-////			System.out.println("cache create=>"+getStateNo(list)+"/"+weightSum);
+////			//System.out.println("cache create=>"+getStateNo(list)+"/"+weightSum);
 //			return;
 //		}
 //		
@@ -98,13 +98,13 @@ public class BarbellSortingGreedy {
 //				int to = list.get(j);
 //				if(minWeitht > (weightSum+from+to)){
 //					minWeitht = weightSum+from+to;
-//					System.out.println(i+"/"+j+":"+minWeitht);
+//					//System.out.println(i+"/"+j+":"+minWeitht);
 //					minlist.add(i*100000+j);
 //				}
 //			}
 //		}
 //		
-//		System.out.println("minlist="+minlist);
+//		//System.out.println("minlist="+minlist);
 //		
 //		for(int i=0;i<minlist.size();i++){
 //			int fromi = minlist.get(i)/100000;
@@ -118,7 +118,7 @@ public class BarbellSortingGreedy {
 //			
 //			BigInteger stateNo = getStateNo(list);
 //			if(!cache.containsKey(stateNo)){
-//				System.out.println("cache create=>"+stateNo+"/"+weightSum);
+//				//System.out.println("cache create=>"+stateNo+"/"+weightSum);
 //				cache.put(stateNo, weightSum+from+to);
 //				createMinWeight(depth-1,list,weightSum+from+to);					
 //			}
@@ -137,7 +137,7 @@ public class BarbellSortingGreedy {
 //				Factorial[i] = Factorial[i-1].multiply(BigInteger.valueOf(i));
 //			}
 //		}
-//		System.out.println("preCal Completed="+"preCal["+(Factorial.length-1)+"]:"+Factorial[Factorial.length-1]);
+//		//System.out.println("preCal Completed="+"preCal["+(Factorial.length-1)+"]:"+Factorial[Factorial.length-1]);
 		for(int i=0;i<NotSorted.length;i++){
 			int swapIndex = NotSortedIndex.get(Sorted[i]);
 			int wsum = NotSorted[i]+NotSorted[swapIndex];
@@ -168,12 +168,12 @@ public class BarbellSortingGreedy {
 					less++;				
 				}
 			}
-//			System.out.println("list.get(i)="+list.get(i)+"/"+less);
-//			System.out.println("Factorial[N-1-i]:"+Factorial[N-i-1]);
+//			//System.out.println("list.get(i)="+list.get(i)+"/"+less);
+//			//System.out.println("Factorial[N-1-i]:"+Factorial[N-i-1]);
 			stateNo = stateNo.add(Factorial[N-i-1].multiply(BigInteger.valueOf(less)));
 		}
 		
-//		System.out.println("list="+list+"/"+stateNo);
+//		//System.out.println("list="+list+"/"+stateNo);
 		
 		return stateNo;
 	}
@@ -187,13 +187,13 @@ public class BarbellSortingGreedy {
 //			}
 //		}
 //		
-//		System.out.println("getSamePositionCount="+rslt+"/notsorted=>"+notsorted);
+//		//System.out.println("getSamePositionCount="+rslt+"/notsorted=>"+notsorted);
 //		return rslt;
 //	}
 	
 	public static int getMinWeightSum(int weightsum){
-//		System.out.println("******************getMinWeightSum()****************************************");
-//		System.out.println("notsorted=>"+printArray(NotSorted));
+//		//System.out.println("******************getMinWeightSum()****************************************");
+//		//System.out.println("notsorted=>"+printArray(NotSorted));
 		
 		int minweightsum = 0;
 		
@@ -201,7 +201,7 @@ public class BarbellSortingGreedy {
 			Iterator iter = MinSwap.keySet().iterator();
 			int minswapkey = (Integer)iter.next();
 			HashSet minswapList = (HashSet)MinSwap.get(minswapkey);
-//			System.out.println("minswapkey="+minswapkey+"/minswapList=>"+minswapList);
+//			//System.out.println("minswapkey="+minswapkey+"/minswapList=>"+minswapList);
 			
 			Iterator swapiter = minswapList.iterator();
 			
@@ -261,13 +261,13 @@ public class BarbellSortingGreedy {
 						}
 					}
 				}else{
-//					System.out.println("Change the sequence=>"+nextswap);
+//					//System.out.println("Change the sequence=>"+nextswap);
 				}
 				
-//				System.out.println("NotSortedIndex=>"+NotSortedIndex);
-//				System.out.println("NotSorted=>"+printArray(NotSorted));
-//				System.out.println("Sorted   =>"+printArray(Sorted));
-//				System.out.println("MinSwap=>"+MinSwap);
+//				//System.out.println("NotSortedIndex=>"+NotSortedIndex);
+//				//System.out.println("NotSorted=>"+printArray(NotSorted));
+//				//System.out.println("Sorted   =>"+printArray(Sorted));
+//				//System.out.println("MinSwap=>"+MinSwap);
 				
 //				minweightsum = Math.min(minweightsum, getMinWeightSum(weightsum+wsum));
 				minweightsum = minweightsum + wsum;
@@ -281,7 +281,7 @@ public class BarbellSortingGreedy {
 		Iterator iter = cache.keySet().iterator();
 		while(iter.hasNext()){
 			BigInteger key = (BigInteger)iter.next();
-			System.out.println("cache["+key+"]="+cache.get(key));
+			//System.out.println("cache["+key+"]="+cache.get(key));
 		}
 	}
 	
