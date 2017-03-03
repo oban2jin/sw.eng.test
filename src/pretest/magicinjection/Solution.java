@@ -70,6 +70,7 @@ public class Solution {
 		}
 		bw.flush();
 	}
+	
 
 	public static Pain getMinPainSum(int s,int e,int k,int days){
 //		System.out.println(s+"/"+e+"/"+k+"/"+days);
