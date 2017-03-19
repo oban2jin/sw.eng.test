@@ -74,7 +74,7 @@ public class Solution {
 	public static RMQ rmq;
 	public static int[] cache;
 	public static void main(String[] args) throws Exception{
-		System.setIn(new FileInputStream("/Users/oban2jin/Documents/workspace/sw.eng.test/src/pretest/y17m4/sample.txt"));
+		System.setIn(new FileInputStream("/Users/oban2jin/Documents/workspace/sw.eng.test/src/pretest/y17m4/sample_input.txt"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		long startTime = System.currentTimeMillis();
 		T=Integer.parseInt(br.readLine());
@@ -88,7 +88,7 @@ public class Solution {
 			}
 			
 			Arrays.sort(O,1,O.length);
-			System.out.println("N=["+N+"]");
+//			System.out.println("N=["+N+"]");
 //			for(AR x:O) System.out.print(x+" ");
 //			System.out.println("");
 			
@@ -104,15 +104,17 @@ public class Solution {
 	public static int DP(int m){
 //		System.out.println("DP Call m > ["+m+"]");
 		int r=0;
+		if(cache[m]!=-1)return cache[m];
+		
 		int inx =rmq.qry(m, MAXN); 
 		if(inx==INF){
 //			System.out.println("Base Case Return");
 			return 0;
 		}
-		if(cache[m]!=-1)return cache[m];
+		
 		for(int n=inx;n<N+1;n++){
-//			System.out.println(O[n]);
 			if(!visit[n]){
+//				System.out.println(O[n]);
 				visit[n]=true;
 				r=Math.max(r,O[n].h+DP(m+O[n].h));
 				visit[n]=false;
